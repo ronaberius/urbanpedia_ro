@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import json
 import re
 
-with open("/home/vladootz/Documents/urbanpedia/index.html", "r") as f:
+with open("/home/vladootz/Documents/urbanpedia/1index.html", "r") as f:
     contents = f.read()
     soup = BeautifulSoup(contents, 'lxml')
     part1 = (soup.find('h1', attrs={ "class" : "definition"}))
@@ -25,13 +25,20 @@ cuv6 = ' '.join(cuv3.split())
 # o = json.loads(n)
 # print(o['cuvant'], o['definitie'], o['exemplu'])
 
-data = {}
-data['dictionar'] = []
-data['dictionar'].append({
-    'cuvant': cuv4,
-    'definitie': cuv5,
-    'exemplu': cuv6
-})
+if cuv4 == None:
+    data = {
+        'cuvant': "n-avem",
+        'definitie': "n-avem",
+        'exemplu': "n-avem"
+        }
+else:
+    data = {
+        'cuvant': cuv4,
+        'definitie': cuv5,
+        'exemplu': cuv6
+        }
 
-with open('/home/vladootz/Documents/urbanpedia/json.txt', 'w') as outfile:
-    json.dump(data, outfile)
+app_json = json.dumps(data, ensure_ascii=False).encode('utf8')
+# print(app_json.decode())
+with open('/home/vladootz/Documents/urbanpedia/1json.json', 'w') as outfile:
+    outfile.write(app_json.decode())
